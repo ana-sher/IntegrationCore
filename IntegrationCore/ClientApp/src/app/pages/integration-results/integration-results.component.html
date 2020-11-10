@@ -1,0 +1,13 @@
+<button nbButton ghost (click)="refresh()" status="info">Refresh</button>
+
+<div class="systems-container">
+  <nb-card *ngFor="let transaction of transactions; let i = index">
+    <nb-card-header>{{transaction.givenName}}</nb-card-header>
+    <nb-card-body>
+      {{transaction.content}}
+    </nb-card-body>
+    <nb-card-footer>
+      {{transaction.timestamp}}
+    </nb-card-footer>
+  </nb-card>
+</div>

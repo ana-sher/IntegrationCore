@@ -1,0 +1,75 @@
+<div class="row">
+  <input nbInput fullWidth placeholder="Name"
+            [(ngModel)]="name">
+</div>
+<div class="row">
+  <div class="col">
+    <nb-layout-column>
+      <nb-select placeholder="System from" [(selected)]="systemFrom" (selectedChange)="getTypes(true)">
+        <nb-option *ngFor="let system of systems" [value]="system">{{system.name}}</nb-option>
+      </nb-select>
+      <nb-card *ngIf="systemFrom && connectionFromValues">
+        <nb-card-body>
+          <input *ngFor="let cf of connectionFromValues" type="text" nbInput [placeholder]="cf.connectionField.name"
+            [(ngModel)]="cf.value">
+        </nb-card-body>
+      </nb-card>
+      <nb-select *ngIf="typesFrom" placeholder="Type from" [(selected)]="typeFrom">
+        <nb-option *ngFor="let type of typesFrom" [value]="type">{{type.name}}</nb-option>
+      </nb-select>
+      <app-type-expanded *ngIf="typeFrom" [type]="typeFrom" [types]="typesFrom" [(ngModel)]="selectedFieldFrom"></app-type-expanded>
+    </nb-layout-column>
+  </div>
+  <div class="col">
+    <nb-layout-column>
+      <nb-select placeholder="System to" [(selected)]="systemTo" (selectedChange)="getTypes(false)">
+        <nb-option *ngFor="let system of systems" [value]="system">{{system.name}}</nb-option>
+      </nb-select>
+      <nb-card *ngIf="systemTo && connectionToValues">
+        <nb-card-body>
+          <input *ngFor="let cf of connectionToValues" type="text" nbInput [placeholder]="cf.connectionField.name"
+            [(ngModel)]="cf.value">
+        </nb-card-body>
+      </nb-card>
+      <nb-select *ngIf="typesTo" placeholder="Type to" [(selected)]="typeTo">
+        <nb-option *ngFor="let type of typesTo" [value]="type">{{type.name}}</nb-option>
+      </nb-select>
+      <app-type-expanded *ngIf="typeTo" [type]="typeTo" [types]="typesTo" [(ngModel)]="selectedFieldTo"></app-type-expanded>
+    </nb-layout-column>
+  </div>
+</div>
+
+
+
+<button nbButton ghost *ngIf="!newConnection" (click)="addConnection()" status="success">Add connection</button>
+<nb-card *ngIf="newConnection">
+  <nb-card-header>{{selectedFieldFrom?.name}} - {{selectedFieldTo?.name}}</nb-card-header>
+  <nb-card-body>
+    <input type="text" nbInput placeholder="First Field Filter Function"
+      [(ngModel)]="newConnection.firstFieldFilterFunction">
+    <input type="text" nbInput placeholder="Second Field Filter Function"
+      [(ngModel)]="newConnection.secondFieldFilterFunction">
+  </nb-card-body>
+  <nb-card-footer><button nbButton ghost (click)="saveConnection()" status="info">Save</button>
+  </nb-card-footer>
+</nb-card>
+
+<button nbButton ghost (click)="generate()" status="info">Generate Connections</button>
+
+<div class="connections">
+  <nb-card *ngFor="let connection of connections; let i = index">
+    <nb-card-body>
+      <div class="first-field">
+        {{connection.firstField.name}}
+      </div>
+      <div class="second-field">
+        {{connection.secondField.name}}
+      </div>
+    </nb-card-body>
+    <nb-card-footer><button nbButton ghost status="danger" (click)="deleteConnection(i)" size="small">
+        <nb-icon icon="trash"></nb-icon>
+      </button></nb-card-footer>
+  </nb-card>
+</div>
+
+<button nbButton ghost (click)="saveIntegration()" status="info">Save Integration</button>

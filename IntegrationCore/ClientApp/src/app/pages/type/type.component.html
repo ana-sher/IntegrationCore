@@ -1,0 +1,66 @@
+<nb-card *ngIf="type">
+  <nb-card-header><input type="text" nbInput fullWidth placeholder="Name" [(ngModel)]="type.name"></nb-card-header>
+  <nb-card-body>
+    <div class="row">
+      <input type="text" nbInput placeholder="Url Ending" [(ngModel)]="type.urlEnding">
+    </div>
+    <div class="row">
+      <div class="col">
+        <input type="text" nbInput placeholder="Get Field Wrapper" [(ngModel)]="type.getFieldWrapper">
+        <input type="text" nbInput placeholder="Post Field Wrapper" [(ngModel)]="type.postFieldWrapper">
+      </div>
+      <div class="col">
+        <input type="text" nbInput placeholder="Get By Id Field Wrapper" [(ngModel)]="type.getByIdFieldWrapper">
+        <input type="text" nbInput placeholder="Put Field Wrapper" [(ngModel)]="type.putFieldWrapper">
+      </div>
+    </div>
+
+    <button nbButton *ngIf="!isEditing" (click)="addField()" status="primary">Add Field</button>
+    <div class="field-edit-row" *ngIf="isEditing && newField">
+      <div class="row">
+        <div class="col">
+          <input type="text" nbInput placeholder="Name" [(ngModel)]="newField.name">
+        </div>
+        <div class="col">
+          <nb-select placeholder="Type" [(selected)]="newField.typeOfFieldId">
+            <nb-option *ngFor="let type of types" [value]="type.id">{{type.name}}</nb-option>
+          </nb-select>
+        </div>
+      </div>
+
+     <div class="row">
+       <div class="col">
+        <input type="text" nbInput placeholder="Default value" [(ngModel)]="newField.defaultValue">
+       </div>
+       <div class="col">
+        <nb-checkbox status="basic" [(ngModel)]="newField.isArray">Is Array</nb-checkbox>
+       </div>
+     </div>
+
+
+      <button nbButton ghost (click)="saveNewField()" status="info" size="small"><nb-icon icon="checkmark-outline"></nb-icon></button>
+    </div>
+    <nb-list>
+      <nb-list-item *ngFor="let field of type.fields; let i = index">
+        <div class="field-row" *ngIf="editIndex !== i">
+          <code>{{ field.name }}: {{typesDictionary[field.typeOfFieldId].name}}{{field.isArray ? '[]' : ''}};</code>
+          <button nbButton ghost *ngIf="!isEditing" (click)="startEditing(i)" status="info" size="small"><nb-icon icon="edit-outline"></nb-icon></button>
+          <button nbButton ghost status="danger" (click)="delete(i)" size="small"><nb-icon icon="trash"></nb-icon></button>
+        </div>
+        <div class="field-edit-row" *ngIf="editIndex === i">
+          <input type="text" nbInput placeholder="Name" [(ngModel)]="field.name">
+          <nb-select placeholder="Type" [(selected)]="field.typeOfFieldId">
+            <nb-option *ngFor="let type of types" [value]="type.id">{{type.name}}</nb-option>
+          </nb-select>
+          <input type="text" nbInput placeholder="Default value" [(ngModel)]="field.defaultValue">
+          <nb-checkbox status="basic" [(ngModel)]="field.isArray">Is Array</nb-checkbox>
+          <button nbButton ghost (click)="saveField()" status="info" size="small"><nb-icon icon="checkmark-outline"></nb-icon></button>
+        </div>
+      </nb-list-item>
+    </nb-list>
+  </nb-card-body>
+  <nb-card-footer>
+    <button nbButton ghost (click)="saveType()" status="primary"><nb-icon icon="checkmark-outline"></nb-icon></button>
+    <button nbButton ghost status="danger" (click)="deleteType()"><nb-icon icon="trash"></nb-icon></button>
+  </nb-card-footer>
+</nb-card>

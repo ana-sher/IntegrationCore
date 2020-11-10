@@ -1,0 +1,22 @@
+<nb-card>
+  <nb-card-body>
+    <nb-list>
+      <nb-list-item *ngFor="let field of type.fields; let i = index"
+      [ngClass]="{'selected': selectedField?.id == field.id}" (click)="selectField(field)">
+        <div class="field-row row" *ngIf="isBasicType(typesDictionary[field.typeOfFieldId].name)">
+          <code>{{ field.name }}: {{typesDictionary[field.typeOfFieldId].name}}{{field.isArray ? '[]' : ''}};</code>
+        </div>
+        <nb-accordion *ngIf="!isBasicType(typesDictionary[field.typeOfFieldId].name)">
+          <nb-accordion-item>
+            <nb-accordion-item-header>
+              <code>{{ field.name }}: {{typesDictionary[field.typeOfFieldId].name}}{{field.isArray ? '[]' : ''}};</code>
+            </nb-accordion-item-header>
+            <nb-accordion-item-body>
+              <app-type-expanded [types]="types" [type]="typesDictionary[field.typeOfFieldId]" [ngModel]="selectedField" (ngModelChange)="selectField($event)"></app-type-expanded>
+            </nb-accordion-item-body>
+          </nb-accordion-item>
+          </nb-accordion>
+      </nb-list-item>
+    </nb-list>
+  </nb-card-body>
+</nb-card>

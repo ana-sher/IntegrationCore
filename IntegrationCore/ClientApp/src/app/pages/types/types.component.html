@@ -1,0 +1,15 @@
+<button nbButton ghost (click)="create()" status="info">Create</button>
+<button nbButton ghost (click)="generate()" status="info">Generate</button>
+
+<div class="types-container">
+  <nb-card *ngFor="let type of types; let i = index">
+    <nb-card-header>{{type.name}}</nb-card-header>
+    <nb-card-body>
+      {{type.urlEnding}}
+    </nb-card-body>
+    <nb-card-footer>
+      <button nbButton ghost (click)="edit(i)" status="info">Edit</button>
+    </nb-card-footer>
+  </nb-card>
+</div>
+

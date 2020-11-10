@@ -1,0 +1,14 @@
+<button nbButton ghost (click)="create()" status="info">Create</button>
+
+<div class="systems-container">
+  <nb-card *ngFor="let system of systems; let i = index">
+    <nb-card-header>{{system.name}}</nb-card-header>
+    <nb-card-body>
+      {{system.url}}
+    </nb-card-body>
+    <nb-card-footer>
+      <button nbButton ghost (click)="edit(i)" status="info">Edit</button>
+      <button nbButton ghost (click)="viewTypes(i)" status="info">Types</button>
+    </nb-card-footer>
+  </nb-card>
+</div>

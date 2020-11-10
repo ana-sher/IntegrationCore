@@ -1,0 +1,26 @@
+<nb-card [style.width.px]="600" [style.height.px]="500">
+  <nb-card-header>Generate types</nb-card-header>
+  <nb-card-body>
+    <input type="text" nbInput placeholder="Root Type Name" [(ngModel)]="name">
+    <textarea nbInput fullWidth [(ngModel)]="data" placeholder="Object"></textarea>
+    <nb-checkbox status="basic" [(ngModel)]="addDefaultValues">Add Default Values</nb-checkbox>
+    <button nbButton (click)="generate()" status="info">Generate</button>
+    <nb-card *ngFor="let type of types; let i = index">
+      <nb-card-header>{{type.name}}</nb-card-header>
+      <nb-card-body>
+        {{type.urlEnding}}
+        <nb-list>
+          <nb-list-item *ngFor="let field of type.fields; let i = index">
+            <div class="field-row">
+              <code>{{ field.name }}: {{typesDictionary[field.typeOfFieldId].name}}{{field.isArray ? '[]' : ''}}; {{field.defaultValue ? '('+field.defaultValue+')' : ''}}</code>
+            </div>
+          </nb-list-item>
+        </nb-list>
+      </nb-card-body>
+    </nb-card>
+  </nb-card-body>
+  <nb-card-footer>
+    <button nbButton hero status="primary" (click)="save()">Save</button>
+    <button nbButton status="warning" (click)="dismiss()">Cancel</button>
+  </nb-card-footer>
+</nb-card>

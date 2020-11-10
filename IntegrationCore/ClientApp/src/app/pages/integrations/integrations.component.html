@@ -1,0 +1,20 @@
+<button nbButton ghost (click)="create()" status="info">Create</button>
+
+<div class="systems-container">
+  <nb-card *ngFor="let integration of integrations; let i = index">
+    <nb-card-header>{{integration.name}}</nb-card-header>
+    <nb-card-body>
+      {{integration.typeFrom.name}} <nb-icon icon="arrowhead-right-outline"></nb-icon> {{integration.typeTo.name}}
+    </nb-card-body>
+    <nb-card-footer>
+      <button nbButton ghost (click)="run(i)" status="success">
+        <nb-icon icon="arrow-right-outline"></nb-icon>
+      </button>
+      <button nbButton ghost (click)="viewResults(i)" status="info">
+        <nb-icon icon="folder-outline"></nb-icon>
+      </button>
+      <button nbButton ghost status="danger" (click)="delete(i)">
+        <nb-icon icon="trash"></nb-icon></button>
+    </nb-card-footer>
+  </nb-card>
+</div>

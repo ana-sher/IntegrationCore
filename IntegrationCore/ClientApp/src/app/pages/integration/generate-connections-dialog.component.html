@@ -1,0 +1,23 @@
+<nb-card [style.width.px]="600" [style.height.px]="500">
+  <nb-card-header>Generate connections</nb-card-header>
+  <nb-card-body>
+
+    <textarea nbInput fullWidth [(ngModel)]="objFrom" placeholder="Object From"></textarea>
+    <textarea nbInput fullWidth [(ngModel)]="objTo" placeholder="Object To"></textarea>
+    <button nbButton (click)="generate()" status="info">Generate</button>
+    <nb-card *ngFor="let connection of connections; let i = index">
+      <nb-card-body>
+        <div class="first-field">
+          {{connection.firstField.name}}
+        </div>
+        <div class="second-field">
+          {{connection.secondField.name}}
+        </div>
+      </nb-card-body>
+    </nb-card>
+  </nb-card-body>
+  <nb-card-footer>
+    <button nbButton hero status="primary" (click)="save()">Save</button>
+    <button nbButton status="danger" (click)="dismiss()">Cancel</button>
+  </nb-card-footer>
+</nb-card>

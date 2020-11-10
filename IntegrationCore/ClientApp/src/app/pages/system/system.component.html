@@ -1,0 +1,82 @@
+<nb-card>
+  <nb-card-header><input type="text" nbInput fullWidth placeholder="Name" [(ngModel)]="system.name"></nb-card-header>
+  <nb-card-body>
+    <div class="row">
+      <div class="col">
+        <nb-select placeholder="Source Type" [(selected)]="system.transferType" (selectedChange)="transferTypeChanged()">
+          <nb-option [value]="0">FTP</nb-option>
+          <nb-option [value]="1">API</nb-option>
+        </nb-select>
+      </div>
+      <div class="col">
+        <nb-select placeholder="Data Type" [(selected)]="system.dataType">
+          <nb-option [value]="0">JSON</nb-option>
+          <nb-option [value]="1">XML</nb-option>
+        </nb-select>
+      </div>
+    </div>
+    <div class="row">
+      <input type="text" nbInput placeholder="Url" [(ngModel)]="system.url">
+    </div>
+
+    <div class="row">
+      <div class="col">
+        <input type="text" nbInput placeholder="Get Url Ending" [(ngModel)]="system.getUrlEnding">
+        <input type="text" nbInput placeholder="Post Url Ending" [(ngModel)]="system.postUrlEnding">
+        <input type="text" nbInput placeholder="Delete Url Ending" [(ngModel)]="system.deleteUrlEnding">
+      </div>
+      <div class="col">
+        <input type="text" nbInput placeholder="Get By Identifier Url Ending" [(ngModel)]="system.getByIdentifierUrlEnding">
+        <input type="text" nbInput placeholder="Put Url Ending" [(ngModel)]="system.putUrlEnding">
+      </div>
+    </div>
+    <div class="row">
+      <button nbButton *ngIf="!isEditing" (click)="addConnectionFiled()" status="primary">Add connection field</button>
+    </div>
+
+
+    <div class="field-edit-row row" *ngIf="newConnField">
+      <input class="col-3-b" type="text" nbInput placeholder="Name" [(ngModel)]="newConnField.name">
+      <nb-select  class="col-3-b" placeholder="Role" [(selected)]="newConnField.role">
+        <nb-option [value]="0">Header</nb-option>
+        <nb-option [value]="1">JsonBody</nb-option>
+        <nb-option [value]="2">Query</nb-option>
+      </nb-select>
+      <button  class="col-3-s" nbButton ghost (click)="saveConnectionField()" status="info" size="small">
+        <nb-icon icon="checkmark-outline"></nb-icon>
+      </button>
+    </div>
+    <nb-list>
+      <nb-list-item *ngFor="let conn of system.connectionFields; let i = index">
+        <div class="field-row" *ngIf="editIndex !== i">
+          {{ conn.name }}, {{conn.role}}
+          <button nbButton ghost *ngIf="!isEditing" (click)="startEditing(i)" status="info" size="small">
+            <nb-icon icon="edit-outline"></nb-icon>
+          </button>
+          <button nbButton ghost status="danger" (click)="delete(i)" size="small">
+            <nb-icon icon="trash"></nb-icon>
+          </button>
+        </div>
+        <div class="field-edit-row row" *ngIf="editIndex === i">
+          <input type="text" nbInput placeholder="Name" [(ngModel)]="conn.name">
+          <nb-select placeholder="Role" [(selected)]="conn.role">
+            <nb-option [value]="0">Header</nb-option>
+            <nb-option [value]="1">JsonBody</nb-option>
+            <nb-option [value]="2">Query</nb-option>
+          </nb-select>
+          <button nbButton ghost (click)="saveField()" status="info" size="small">
+            <nb-icon icon="checkmark-outline"></nb-icon>
+          </button>
+        </div>
+      </nb-list-item>
+    </nb-list>
+  </nb-card-body>
+  <nb-card-footer>
+    <button nbButton ghost (click)="saveSystem()" status="primary">
+      <nb-icon icon="checkmark-outline"></nb-icon>
+    </button>
+    <button nbButton ghost status="danger" (click)="deleteSystem()">
+      <nb-icon icon="trash"></nb-icon>
+    </button>
+  </nb-card-footer>
+</nb-card>
